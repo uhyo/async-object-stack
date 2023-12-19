@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "declaration": true,
+    "sourceMap": true,
+    "declarationMap": true,
     "noUncheckedIndexedAccess": true,
     "verbatimModuleSyntax": true,
     "incremental": true,

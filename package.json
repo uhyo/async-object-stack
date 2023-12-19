@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Stacked objects in async call stack",
   "type": "module",
-  "main": "index.js",
+  "exports": {
+    ".": {
+      "default": "./dist/node.js"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
