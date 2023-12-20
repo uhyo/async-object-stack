@@ -81,7 +81,7 @@ test("Basic behavior", async (t) => {
     });
   });
 });
-await test("region()", async (t) => {
+test("region()", async (t) => {
   await t.test("inner region inherits outer region", async () => {
     const stack = createAsyncObjectStack();
     await stack.region(async () => {
