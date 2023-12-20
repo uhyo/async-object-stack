@@ -121,6 +121,35 @@ await test("region()", async (t) => {
       assert.deepEqual(list, [1, 2]);
     });
   });
+  await t.test(
+    "modification to outer region does not affect inner region",
+    async () => {
+      const stack = createAsyncObjectStack();
+      await stack.region(async () => {
+        const inner = async () => {
+          using guard = stack.push({ abc: "def" });
+          await microSleep(2);
+          assert.deepEqual(
+            stack.render(),
+            nullPrototype({ pika: "chu", abc: "def" }),
+          );
+        };
+
+        let innerP;
+        let error: unknown;
+        {
+          const obj1 = { pika: "chu" };
+          using guard = stack.push(obj1);
+          innerP = stack.region(inner).catch((e) => (error = e));
+        }
+        await microSleep(1);
+        assert.deepEqual(stack.render(), nullPrototype({}));
+        await innerP;
+        assert.ifError(error);
+        assert.deepEqual(stack.render(), nullPrototype({}));
+      });
+    },
+  );
 });
 
 function nullPrototype(object: object): object {

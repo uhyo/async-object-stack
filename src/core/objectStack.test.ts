@@ -73,6 +73,55 @@ test("push()", async (t) => {
   });
 });
 
+test("snapshot()", async (t) => {
+  await t.test("returns an empty array when no objects are pushed", () => {
+    const stack = ObjectStack.create();
+    assert.deepEqual(stack.snapshot(), []);
+  });
+
+  await t.test("returns an array with pushed objects", () => {
+    const stack = ObjectStack.create();
+    const obj1 = { pika: "chu" };
+    stack.push(obj1);
+    const result = stack.snapshot();
+    assert.notEqual(result, obj1);
+    assert.deepEqual(result, [nullPrototype({ pika: "chu" })]);
+  });
+
+  await t.test("keeps all object", () => {
+    const stack = ObjectStack.create();
+    const obj1 = { pika: "chu" };
+    const obj2 = { a: "b" };
+    stack.push(obj1);
+    stack.push(obj2);
+    const result = stack.snapshot();
+    assert.deepEqual(result, [
+      nullPrototype({ pika: "chu" }),
+      nullPrototype({ a: "b" }),
+    ]);
+  });
+
+  await t.test("Object in the middle can be removed", () => {
+    const stack = ObjectStack.create();
+    const obj1 = { pika: "chu", a: "b" };
+    const obj2 = { a: "c" };
+    const remove = stack.push(obj1);
+    stack.push(obj2);
+    remove();
+    const result = stack.snapshot();
+    assert.deepEqual(result, [nullPrototype({ a: "c" })]);
+  });
+
+  await t.test("Modification of snapshot array does not affect stack", () => {
+    const stack = ObjectStack.create();
+    const obj1 = { pika: "chu" };
+    stack.push(obj1);
+    const result = stack.snapshot();
+    (result as [Record<string, unknown>])[0] = { a: "b" };
+    assert.deepEqual(stack.render(), nullPrototype({ pika: "chu" }));
+  });
+});
+
 test("child()", async (t) => {
   await t.test("returns a new instance", () => {
     const stack = ObjectStack.create();
@@ -85,6 +134,7 @@ test("child()", async (t) => {
     stack.push({ pika: "chu" });
     const child = stack.child();
     assert.deepEqual(child.render(), nullPrototype({ pika: "chu" }));
+    assert.deepEqual(child.snapshot(), [nullPrototype({ pika: "chu" })]);
   });
 
   await t.test("child render result is merged with parent", () => {
@@ -93,6 +143,10 @@ test("child()", async (t) => {
     const child = stack.child();
     child.push({ a: "b" });
     assert.deepEqual(child.render(), nullPrototype({ pika: "chu", a: "b" }));
+    assert.deepEqual(child.snapshot(), [
+      nullPrototype({ pika: "chu" }),
+      nullPrototype({ a: "b" }),
+    ]);
   });
 
   await t.test("child render result overrides parent", () => {
@@ -101,6 +155,10 @@ test("child()", async (t) => {
     const child = stack.child();
     child.push({ a: "c" });
     assert.deepEqual(child.render(), nullPrototype({ pika: "chu", a: "c" }));
+    assert.deepEqual(child.snapshot(), [
+      nullPrototype({ pika: "chu", a: "b" }),
+      nullPrototype({ a: "c" }),
+    ]);
   });
 });
 

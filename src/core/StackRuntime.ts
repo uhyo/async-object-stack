@@ -43,6 +43,19 @@ export class AsyncObjectStack {
     }
     return stack.render();
   }
+
+  /**
+   * Returns the snapshot of the current stack.
+   */
+  stackSnapshot(): object[] {
+    const stack = this.#store.getStore();
+    if (stack === undefined) {
+      throw new Error(
+        "StackRuntime#stackSnapshot must be called inside a region() callback",
+      );
+    }
+    return stack.snapshot();
+  }
 }
 
 class StackGuard implements Disposable {

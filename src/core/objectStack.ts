@@ -2,7 +2,7 @@
  * Stack of objects.
  */
 export class ObjectStack {
-  #parent: ObjectStack | undefined;
+  #parentStack: object[] | undefined;
   #stack: object[] = [];
 
   static create(): ObjectStack {
@@ -10,7 +10,7 @@ export class ObjectStack {
   }
 
   private constructor(parent?: ObjectStack) {
-    this.#parent = parent;
+    this.#parentStack = parent?.snapshot();
   }
 
   child(): ObjectStack {
@@ -18,7 +18,7 @@ export class ObjectStack {
   }
 
   push(value: object): () => void {
-    const internal = Object.assign(Object.create(null), value);
+    const internal = Object.freeze(Object.assign(Object.create(null), value));
     this.#stack.push(internal);
 
     return () => {
@@ -35,10 +35,20 @@ export class ObjectStack {
   }
 
   render(): object {
-    const result = this.#parent?.render() ?? Object.create(null);
+    const result = Object.create(null);
+    if (this.#parentStack !== undefined) {
+      for (const object of this.#parentStack) {
+        Object.assign(result, object);
+      }
+    }
     for (const object of this.#stack) {
       Object.assign(result, object);
     }
     return result;
+  }
+
+  snapshot(): object[] {
+    const result = this.#parentStack ?? [];
+    return result.concat(this.#stack);
   }
 }

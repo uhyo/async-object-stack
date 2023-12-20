@@ -9,12 +9,13 @@
     }
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "node --test"
   },
   "keywords": [
     "AsyncLocalStorage"
   ],
-  "author": "uhyo <uhy@ooo>",
+  "author": "uhyo <uhyo@uhy.ooo>",
   "license": "MIT",
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",
