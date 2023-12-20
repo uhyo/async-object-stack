@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { createAsyncObjectStack } from "../node.js";
+import { createAsyncObjectStack } from "../index.js";
 
 test("Basic behavior", async (t) => {
   await t.test("render()", async (t) => {
