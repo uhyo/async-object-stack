@@ -3,19 +3,29 @@ import { test } from "node:test";
 import { createAsyncObjectStack } from "../index.js";
 
 test("Basic behavior", async (t) => {
-  await t.test("render()", async (t) => {
-    await t.test("throws when called outside of a region", () => {
+  await t.test("default region", async (t) => {
+    await t.test("default region is empty at first", () => {
       const stack = createAsyncObjectStack();
-      assert.throws(
-        () => {
-          stack.render();
-        },
-        {
-          message:
-            "StackRuntime#render must be called inside a region() callback",
-        },
-      );
+      assert.deepEqual(stack.render(), Object.create(null));
     });
+    await t.test("can push to the default region", () => {
+      const stack = createAsyncObjectStack();
+      stack.push({ pika: "chu" });
+      assert.deepEqual(stack.render(), nullPrototype({ pika: "chu" }));
+    });
+    await t.test("first region inherits from default region", () => {
+      const stack = createAsyncObjectStack();
+      stack.push({ pika: "chu" });
+      stack.region(() => {
+        using guard = stack.push({ abc: "def" });
+        assert.deepEqual(
+          stack.render(),
+          nullPrototype({ pika: "chu", abc: "def" }),
+        );
+      });
+    });
+  });
+  await t.test("render()", async (t) => {
     await t.test("returns an empty object when no objects are pushed", () => {
       const stack = createAsyncObjectStack();
       stack.region(() => {
@@ -24,18 +34,6 @@ test("Basic behavior", async (t) => {
     });
   });
   await t.test("push()", async (t) => {
-    await t.test("throws when called outside of a region", () => {
-      const stack = createAsyncObjectStack();
-      assert.throws(
-        () => {
-          stack.push({});
-        },
-        {
-          message:
-            "StackRuntime#push must be called inside a region() callback",
-        },
-      );
-    });
     await t.test("pushed object is reflected", () => {
       const stack = createAsyncObjectStack();
       stack.region(() => {
