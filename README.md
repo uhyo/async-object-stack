@@ -4,7 +4,7 @@ A wrapper of [AsyncLocalStorage](https://nodejs.org/api/async_context.html#async
 
 Primary use case is creating a nice API for structural logging. See [Structural Logging Example](./examples/logger).
 
-**[Reference](./docs/reference.md)**
+**[Reference](./docs/reference.md)** | **[Zenn Article （日本語）](https://zenn.dev/uhyo/articles/async-object-stack)**
 
 ## Installation
 
