@@ -44,6 +44,9 @@ using guard = stack.push({ pika: "chu" });
 using guard2 = stack.push({ bulba: "saur", char: "mander" });
 ```
 
+> [!NOTE]
+> Given object is **shallowly** cloned before pushing to the stack. This means that mutation of the object after pushing to the stack may affect the object in the stack. Generally, you should avoid mutating objects after pushing them to the stack.
+
 ### `AsyncObjectStack#render()`
 
 Renders the stack into one object. Returned object is null-prototyped in order to avoid weird security stuff.
