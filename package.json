@@ -1,6 +1,6 @@
 {
   "name": "async-object-stack",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "description": "Stacked objects in async call stack",
   "author": "uhyo <uhyo@uhy.ooo>",
   "license": "MIT",
