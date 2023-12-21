@@ -28,7 +28,7 @@ Accurate propagation of the context is a hard problem. In server-side JavaScript
 
 `async-object-stack` utilizes `AsyncLocalStorage` to provide a simple interface to manage the context. Its API is specialized for managing the context as a stack of objects which can be rendered into one object at any time. Since log metadata is usually represented as an object, this API is a good fit for structural logging.
 
-This example implements a [`Logger` class](./logger.ts) that uses `async-object-stack` to manage the context. This is a thin wrapper of `AsyncObjectStack` from `async-object-stack`. This class exposes `AsyncObjectStack`'s `push` and `region` methods for managing the context, and provides a `log` method that automatically renders the context into a log entry.
+This example implements a [`Logger` class](./Logger.ts) that uses `async-object-stack` to manage the context. This is a thin wrapper of `AsyncObjectStack` from `async-object-stack`. This class exposes `AsyncObjectStack`'s `push` and `region` methods for managing the context, and provides a `log` method that automatically renders the context into a log entry.
 
 While this implementation emits log entries as JSON strings to the console, you can easily replace it with your favorite logging library.
 
