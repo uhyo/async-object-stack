@@ -10,5 +10,6 @@
     "incremental": true,
     "tsBuildInfoFile": "dist/.tsbuildinfo"
   },
-  "include": ["src", "examples"]
+  "include": ["src", "examples"],
+  "exclude": ["examples/deno", "examples/bun"]
 }

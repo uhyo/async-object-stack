@@ -10,7 +10,7 @@
 
 This package supports Node.js 18 and later.
 
-It is also possible to use this package with other runtimes that support importing `AsyncLocalStorage` from `node:async_hooks` (namely Deno and Bun). However, there is no guarantee that it will work correctly.
+It is also possible to use this package with other runtimes that support importing `AsyncLocalStorage` from `node:async_hooks` (namely Deno and Bun). However, there is no CI set up to guarantee that it will work correctly.
 
 ## `createAsyncObjectStack()`
 
