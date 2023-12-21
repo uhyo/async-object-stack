@@ -4,7 +4,7 @@ This example shows how to use `async-object-stack` to implement an easy to use s
 
 ### How to run
 
-Build TypeScript by `npx tsc` and run `node index.js` to invoke an HTTP server on port 8080.
+Build TypeScript by `npx tsc` and run `node dist/examples/logger/index.js` to invoke an HTTP server on port 8080.
 
 Then access to http://localhost:8080/abc (for example) and see the console. A typical output is like this:
 

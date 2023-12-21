@@ -6,6 +6,12 @@
 - This package loses most of its power if the `using` syntax is unavailable. You need to use either a runtime with native support or a transpiler that supports it.
 - If you use transpilers, you may also need to polyfill `Symbol.disposable`.
 
+## Supported Runtimes
+
+This package supports Node.js 18 and later.
+
+It is also possible to use this package with other runtimes that support importing `AsyncLocalStorage` from `node:async_hooks` (namely Deno and Bun). However, there is no guarantee that it will work correctly.
+
 ## `createAsyncObjectStack()`
 
 Creates an `AsyncObjectStack` instance.
