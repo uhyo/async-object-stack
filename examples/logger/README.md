@@ -1,8 +1,8 @@
-## Structural Logging Example
+# Structural Logging Example
 
 This example shows how to use `async-object-stack` to implement an easy to use structural logging system.
 
-### How to run
+## How to run
 
 Build TypeScript by `npx tsc` and run `node dist/examples/logger/index.js` to invoke an HTTP server on port 8080.
 
@@ -16,7 +16,7 @@ Then access to http://localhost:8080/abc (for example) and see the console. A ty
 {"message":"request processed","app":"example-logger","url":"/favicon.ico","ipAddress":"::1","userId":"755"}
 ```
 
-### What is structural logging?
+## What is structural logging?
 
 **Structural logging** is a logging system where each log entry can contain arbitrary metadata in addition to log message. The benefit of structural logging is that you can easily filter and aggregate logs by metadata.
 
@@ -24,7 +24,7 @@ You often want to share the same metadata across multiple log entries. For examp
 
 Accurate propagation of the context is a hard problem. In server-side JavaScript, [AsyncLocalStorage](https://nodejs.org/api/async_context.html#class-asynclocalstorage) is known as a good solution. With `AsyncLocalStorage`, the context is automatically propagated to all asynchronous callbacks, so you don’t need to pass it around manually.
 
-### Using `async-object-stack`
+## Using `async-object-stack`
 
 `async-object-stack` utilizes `AsyncLocalStorage` to provide a simple interface to manage the context. Its API is specialized for managing the context as a stack of objects which can be rendered into one object at any time. Since log metadata is usually represented as an object, this API is a good fit for structural logging.
 
@@ -47,7 +47,7 @@ using guard = logger.metadata({
 
 By utilizing the `using` syntax, you can ensure that the metadata is automatically removed from the context when the current function ends. In a rare case where you want the metadata to be persisted even after the current function ends, you can just avoid using `using`.
 
-### Using `region`
+## Using `region`
 
 When you use `async-object-stack`, it is important to understand the concept of `region`. Failing to use `region` correctly can lead to unwanted and weird behavior where the context is shared across unrelated tasks.
 

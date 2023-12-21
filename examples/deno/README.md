@@ -1,4 +1,4 @@
-## `async-object-stack` with Deno
+# `async-object-stack` with Deno
 
 This is an example of using `async-object-stack` with Deno.
 
